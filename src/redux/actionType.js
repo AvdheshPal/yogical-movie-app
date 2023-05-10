@@ -1,1 +1,7 @@
-export const ADD_MOVIE = 'ADD_MOVIE'
+export const ADD_MOVIE = 'ADD_MOVIE';
+export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS';
+export const ADD_SELECTED_MOVIE = 'ADD_SELECTED_MOVIE';
+export const RESET_SELECTED_MOVIE = 'RESET_SELECTED_MOVIE'
+export const SET_LOADING = 'SET_LOADING';
+export const SET_SUCCESS = 'SET_SUCCESS';
+export const SET_ERROR = 'SET_ERROR';
