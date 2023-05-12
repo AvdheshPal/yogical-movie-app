@@ -1,4 +1,4 @@
-import { ADD_MOVIE , ADD_SUGGESTIONS , ADD_SELECTED_MOVIE ,RESET_SELECTED_MOVIE , SET_LOADING , SET_ERROR , SET_SUCCESS } from "./actionType";
+import { ADD_MOVIE , ADD_SUGGESTIONS , ADD_SELECTED_MOVIE ,RESET_SELECTED_MOVIE , SET_LOADING , SET_ERROR , SET_SUCCESS , ADD_SEARCH_MOVIE , RESET_SEARCH_MOVIE , SET_TOTAL_PAGES } from "./actionType";
 
 export const addMovie =(data)=>{
     return ({
@@ -28,6 +28,20 @@ export const resetSelectedMovie =()=>{
     })
 }
 
+export const addSearchMovie = (data) =>{
+    return ({
+        type : ADD_SEARCH_MOVIE,
+        payload : data
+    })
+}
+
+export const resetSearchMovie = () =>{
+    return ({
+        type : RESET_SEARCH_MOVIE,
+        payload : null
+    })
+}
+
 export const setLoading = ()=>{
     return ({
         type : SET_LOADING,
@@ -40,13 +54,27 @@ export const setSuccess = ()=>{
     })
 }
 
-export const setError = ()=>{
+export const setError = (error)=>{
     return ({
         type : SET_ERROR,
+        payload:error
+    })
+}
+
+export const setTotalPages =(data)=>{
+    return ({
+        type:SET_TOTAL_PAGES,
+        payload:data
     })
 }
 
 export const fetchMovie = (url)=>(dispatch)=>{
-    fetch(url).then((req)=>req.json()).then((data)=>dispatch(addMovie(data)))
-    .catch((e)=>{console.log(e);})
+    dispatch(setLoading())
+    fetch(url).then((req)=>req.json()).then((data)=>{
+        dispatch(setSuccess())
+        dispatch(addMovie(data.results))
+        dispatch(setTotalPages(data.total_pages))
+    }
+        )
+    .catch((e)=>{dispatch(setError(e))})
 }
