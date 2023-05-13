@@ -8,7 +8,6 @@ export const Title = styled.h1`
   height: 55px;
   padding: 0; margin: 0;
 `
-
 export const Main = styled.div`
 width: 100%; min-height: 100vh;
 background-image: url(${bgimage});
@@ -124,13 +123,3 @@ export const Details = () => {
     </Main>
   </>)
 }
-
-
-{/* <tbody>
-  {Object.entries(selectedMovie)?.map(([key, value]) => {
-    return <TableRow>
-      <TableHeader>{key}</TableHeader>
-      <TableCell>{value}</TableCell>
-    </TableRow>
-  })}
-</tbody> */}

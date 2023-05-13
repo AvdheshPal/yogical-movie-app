@@ -85,7 +85,7 @@
 }
 
 @media only screen and (max-width: 767px) {
-  /* styles for mobile devices */
+
   #suggestion{
     width: 63%;
   }
@@ -94,9 +94,9 @@
   }
 }
 
-// Media query for desktop devices
+
 @media only screen and (min-width: 768px) {
-  /* styles for desktop devices */
+
   #suggestion{
     width: 36%;
   }
