@@ -1,4 +1,4 @@
-import { ADD_MOVIE , ADD_SUGGESTIONS , ADD_SELECTED_MOVIE ,RESET_SELECTED_MOVIE , SET_LOADING , SET_ERROR , SET_SUCCESS , ADD_SEARCH_MOVIE , RESET_SEARCH_MOVIE , SET_TOTAL_PAGES } from "./actionType";
+import { ADD_MOVIE , ADD_SUGGESTIONS , RESET_SUGGESTIONS , ADD_SELECTED_MOVIE ,RESET_SELECTED_MOVIE , SET_LOADING , SET_ERROR , SET_SUCCESS , ADD_SEARCH_MOVIE , RESET_SEARCH_MOVIE , SET_TOTAL_PAGES } from "./actionType";
 
 export const addMovie =(data)=>{
     return ({
@@ -11,6 +11,12 @@ export const addSuggestions =(data)=>{
     return ({
         type: ADD_SUGGESTIONS,
         payload : data
+    })
+}
+
+export const resetSuggestions =()=>{
+    return ({
+        type: RESET_SUGGESTIONS
     })
 }
 
@@ -77,4 +83,15 @@ export const fetchMovie = (url)=>(dispatch)=>{
     }
         )
     .catch((e)=>{dispatch(setError(e))})
+}
+
+
+export const fetchSuggestions = (url)=>(dispatch)=>{
+    fetch(url).then((req)=>req.json()).then((data)=>{dispatch(addSuggestions(data.results))})
+    .catch((e)=>{console.log(e);})
+}
+
+export const fetchSearch = (url)=>(dispatch)=>{
+    fetch(url).then((req)=>req.json()).then((data)=>{dispatch(addSearchMovie(data.results))})
+    .catch((e)=>{console.log(e);})
 }

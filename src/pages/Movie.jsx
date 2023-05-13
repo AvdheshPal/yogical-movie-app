@@ -1,70 +1,80 @@
 import React, { useEffect, useState } from 'react'
-import { SearchBox } from '../components/Searchbox/SearchBox'
-import {Link, json} from 'react-router-dom'
-import { useDispatch , useSelector } from 'react-redux'
-import {fetchMovie, addSelectedMovie } from '../redux/action'
+import { SearchBox } from '../components/SearchBox'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchMovie, addSelectedMovie } from '../redux/action'
+import Loading from '../components/Loading'
+import MovieCard from '../components/MovieCard'
+import styled from 'styled-components';
+import bgimage from "../images/bgimage.jpg";
+
+
+const Container = styled.div`
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+grid-gap: 50px;
+padding: 50px;
+background-image: url(${bgimage});
+background-repeat: repeat;
+@media screen and (max-width: 1200px) {
+ grid-template-columns: repeat(3, 1fr);
+}
+
+@media screen and (max-width: 900px) {
+ grid-template-columns: repeat(2, 1fr);
+}
+
+@media screen and (max-width: 600px) {
+ grid-template-columns: 1fr;
+}
+`;
+
 
 export const Movie = () => {
   const dispatch = useDispatch();
 
-  const { movies , error , loading , total_pages} = useSelector(state => state);
+  const { movies, error, loading, total_pages } = useSelector(state => state);
 
-  const [page,setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
-  let posterUrl = "https://image.tmdb.org/t/p/original"
-
-  let api_key = '92e277f3d43843a85558cb25e1aa78d2';
-
-  let SearchUrl = 'https://api.themoviedb.org/3/search/movie?api_key=92e277f3d43843a85558cb25e1aa78d2&query=Jack+Reacher'
-
-  let trending_movies = 'https://api.themoviedb.org/3/trending/movie/day?api_key=92e277f3d43843a85558cb25e1aa78d2&page=1'
-
-  const fetchMovieFn = ()=>{
+  const fetchMovieFn = () => {
     dispatch(fetchMovie(`https://api.themoviedb.org/3/trending/movie/day?api_key=92e277f3d43843a85558cb25e1aa78d2&page=${page}`))
-    setPage((p)=>{
-      if(p == total_pages){
+    setPage((p) => {
+      if (p == total_pages) {
         return p;
-      }else{
-        return p+1
+      } else {
+        return p + 1
       }
     })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchMovieFn();
-  },[])
+  }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  },[movies])
+  }, [movies])
 
-  function handleScroll(){
+  function handleScroll() {
     if (
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
     ) {
       fetchMovieFn()
-      }
+    }
   }
 
   return (<>
-    <h1>Movie</h1>
-    <SearchBox/>
-    <button onClick={()=>dispatch(fetchMovie(`https://api.themoviedb.org/3/trending/movie/day?api_key=92e277f3d43843a85558cb25e1aa78d2&page=1`))} >Add more</button>
+    <SearchBox />
 
-    <div id='container' >
-
-      {movies.map((obj)=>{
-        return <Link key={obj.id} to={'/details'} onClick={()=>dispatch(addSelectedMovie(obj))} >
-          <div>{obj.media_type}</div>
-          <div>{obj.original_title}</div>
-          <img src={posterUrl+obj.poster_path} alt="" width={200} height={200} />
-        </Link>
+      
+    <Container >
+      {movies.map((obj) => {
+        return <MovieCard movie={obj} path={'/details'} />
       })}
 
-      {loading ? <div>...loading</div> : error ? <div>error in fetchin the data</div> : null}
-
-    </div>
-    </>)
+      {loading ? <div><Loading /></div> : error ? <div>error in fetchin the data</div> : null}
+    </Container>
+  </>)
 }

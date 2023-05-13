@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+* {
+  color: white;
+}
 
 .App-logo {
   height: 40vmin;
@@ -36,8 +39,68 @@
     transform: rotate(360deg);
   }
 }
-#container{
-  background-color: aliceblue;
-  display: grid;
-  grid-template-columns: repeat(4, calc(100% / 4));
+#navbar{
+    display: flex;
+    align-items: center;
+    height: 56px;
+    width: 100%;
+    background-color: #2f3133;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+}
+
+#search{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+#search input{
+    width: 36%;
+    padding: 10px 16px;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #121315;
+    outline: none;
+}
+#search >div{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+#search h5{
+  margin: 10px;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+#suggestion{
+  width:36%;
+  max-height:calc(100vh - 50px);
+  position: absolute;
+  top: 49px;
+  z-index: 50;
+  overflow: hidden;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 767px) {
+  /* styles for mobile devices */
+  #suggestion{
+    width: 63%;
+  }
+  #search input{
+    width:70%;
+  }
+}
+
+// Media query for desktop devices
+@media only screen and (min-width: 768px) {
+  /* styles for desktop devices */
+  #suggestion{
+    width: 36%;
+  }
+  #search input{
+    width:36%;
+  }
 }
