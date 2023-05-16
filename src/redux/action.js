@@ -1,4 +1,4 @@
-import { ADD_MOVIE , ADD_SUGGESTIONS , RESET_SUGGESTIONS , ADD_SELECTED_MOVIE ,RESET_SELECTED_MOVIE , SET_LOADING , SET_ERROR , SET_SUCCESS , ADD_SEARCH_MOVIE , RESET_SEARCH_MOVIE , SET_TOTAL_PAGES } from "./actionType";
+import { ADD_MOVIE , ADD_SUGGESTIONS , RESET_SUGGESTIONS , ADD_SELECTED_MOVIE ,RESET_SELECTED_MOVIE , SET_LOADING , SET_ERROR , SET_SUCCESS , ADD_SEARCH_MOVIE , RESET_SEARCH_MOVIE , SET_TOTAL_PAGES , ADD_TO_FAVORITES , REMOVE_FROM_FAVORITES } from "./actionType";
 
 export const addMovie =(data)=>{
     return ({
@@ -73,6 +73,26 @@ export const setTotalPages =(data)=>{
         payload:data
     })
 }
+
+
+export const addToFavorites = (movie) => {
+  
+    return {
+      type: ADD_TO_FAVORITES,
+      payload: movie,
+    };
+  };
+  
+  export const removeFromFavorites = (movieId) => {
+  
+    return {
+      type: REMOVE_FROM_FAVORITES,
+      payload: movieId,
+    };
+  };
+
+  
+
 
 export const fetchMovie = (url)=>(dispatch)=>{
     dispatch(setLoading())

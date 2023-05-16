@@ -93,6 +93,7 @@ export const SearchBox = () => {
         </div>
         </div>
         <Button to={'/search'} >Filter</Button>
+        <Button to={'/favorite'} >Favorite</Button>
       </div>
     </div>
   </>;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Title, Main } from './Details';
+import { Title, Main , Home } from './Details';
 import styled from 'styled-components';
 import {useDispatch , useSelector} from 'react-redux';
-import {addSelectedMovie, fetchSearch} from '../redux/action'
+import {addSelectedMovie, addToFavorites, fetchSearch} from '../redux/action'
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
@@ -31,7 +31,7 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const Button = styled(Link)`
+export const Button = styled(Link)`
   padding: 8px;
   width: max-content;
   margin: 5px;
@@ -49,7 +49,6 @@ const Button = styled(Link)`
 
 const ResultBox = styled.div`
   width: 100%;
-  margin-left: 20px;
 `;
 
 const MovieBox = styled.div`
@@ -57,12 +56,12 @@ const MovieBox = styled.div`
   align-items: center;
   background-color: #2F3133;
   margin: 20px;
-  width: 100%;
+  width: calc(100% -20px);
 `;
 
 const MovieImage = styled.img`
-  width: 200px;
-  height: 300px;
+  width: 150px;
+  height: 200px;
   margin-right: 20px;
 `;
 
@@ -97,7 +96,7 @@ export const Search = () => {
 
   return (
     <>
-      <Title>Filter The Movies</Title>
+      <Title><Home to={'/'} >Home</Home><h1>Filter The Movies</h1> <Home to={'/favorite'} >Favorite</Home></Title>
       <Main>
         <Container>
           <SearchBox>
@@ -115,6 +114,7 @@ export const Search = () => {
                     <MovieYear>{movie.release_date}</MovieYear>
                     <MovieGenres>{movie.genre}</MovieGenres>
                   <Button onClick={()=>dispatch(addSelectedMovie(movie))} to={'/details'} >Details</Button>
+                  <Button onClick={()=>dispatch(addToFavorites(movie))} >Add to Favorites</Button>
                 </MovieInfo>
               </MovieBox>
             ))}

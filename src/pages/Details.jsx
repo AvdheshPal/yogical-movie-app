@@ -2,11 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux'
 import bgimage from "../images/bgimage.jpg";
+import { Link } from "react-router-dom";
+import { addToFavorites } from "../redux/action";
+import { Button } from "./Search";
 
-export const Title = styled.h1`
+export const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #2f3133;
-  height: 55px;
-  padding: 0; margin: 0;
+  height: 45px;
+  padding: 10px; margin: 0;
 `
 export const Main = styled.div`
 width: 100%; min-height: 100vh;
@@ -91,14 +97,37 @@ const Error = styled.div`
 height: 95vh;
 `
 
+export const Home = styled(Link)`
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 7px;
+background-color: #121315;
+border-radius: 5px;
+border: 1px solid;
+margin: auto 10px;
+cursor: pointer;
+text-decoration: none;
+&:hover{
+  background-color: #2f3133;
+}
+`
+
 export const Details = () => {
+
+  const dispatch = useDispatch();
 
   const { selectedMovie } = useSelector(state => state)
   let poster_url = "https://image.tmdb.org/t/p/original" + selectedMovie?.poster_path;
 
   return (<>
   <Main>
-    <Title>The Movie App</Title>
+   
+      <Title>
+      <Home to={'/'} >Home</Home>
+        <h1>The Movie App</h1>
+        <Home to={'/favorite'} >Favorite</Home>
+      </Title>
 
     {selectedMovie != null ?  <Container>
       <PosterContainer>
@@ -106,16 +135,39 @@ export const Details = () => {
       </PosterContainer>
       <TableContainer>
         <Table>
-          <tbody>
             <tbody>
-              {Object.entries(selectedMovie)?.map(([key, value]) => {
-                return <TableRow>
-                  <TableHeader>{key}</TableHeader>
-                  <TableCell>{value}</TableCell>
-                </TableRow>
-              })}
+              <TableRow>
+                  <TableHeader>Title</TableHeader>
+                  <TableCell>{selectedMovie.title}</TableCell>
+              </TableRow>
+              <TableRow>
+                  <TableHeader>Release Date</TableHeader>
+                  <TableCell>{selectedMovie.release_date}</TableCell>
+              </TableRow>
+              <TableRow>
+                  <TableHeader>Overview</TableHeader>
+                  <TableCell>{selectedMovie.overview}</TableCell>
+              </TableRow>
+              <TableRow>
+                  <TableHeader>Average Vote</TableHeader>
+                  <TableCell>{selectedMovie.vote_average}</TableCell>
+              </TableRow>
+              <TableRow>
+                  <TableHeader>Vote Count</TableHeader>
+                  <TableCell>{selectedMovie.vote_count}</TableCell>
+              </TableRow>
+              <TableRow>
+                  <TableHeader></TableHeader>
+                  <TableCell></TableCell>
+              </TableRow>
+              <TableRow>
+              <TableCell>
+                <div style={{margin:'10px auto'}} >
+                  <Button onClick={()=>dispatch(addToFavorites(selectedMovie))} >Add to Favorite</Button>
+                </div>
+                  </TableCell>
+              </TableRow>
             </tbody>
-          </tbody>
         </Table>
       </TableContainer>
      

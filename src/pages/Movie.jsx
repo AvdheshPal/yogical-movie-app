@@ -70,8 +70,8 @@ export const Movie = () => {
 
       
     <Container >
-      {movies.map((obj) => {
-        return <MovieCard movie={obj} path={'/details'} />
+      {movies.map((obj,i) => {
+        return <MovieCard key={i} movie={obj} path={'/details'} />
       })}
 
       {loading ? <div><Loading /></div> : error ? <div>error in fetchin the data</div> : null}
